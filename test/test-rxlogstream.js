@@ -10,12 +10,12 @@ Test('test data', (t) => {
 
     const subscription = logger.observe().subscribe(
         ({ source, name, timestamp, tags, data }) => {
-            console.log(`${timestamp.ts}(${timestamp.ticks}) ${source}/${name}: ${data}`);
+            console.log(`${timestamp.ts}(${timestamp.ontick}) ${source}/${name}: ${data}`);
             t.equal(source, 'rxlogstream', 'source is correct.');
             t.equal(name, 'mylogger', 'name is correct.');
             t.equal(typeof timestamp, 'object', 'timestamp is an object.');
             t.equal(typeof timestamp.ts, 'number', 'timestamp ts is a number.');
-            t.equal(typeof timestamp.ticks, 'number', 'timestamp ticks is a number.');
+            t.equal(typeof timestamp.ontick, 'number', 'timestamp ontick is a number.');
             t.ok(Array.isArray(tags), 'tags is an array.');
             t.equal(data, 'hello world', 'data is correct.');
         }
@@ -35,12 +35,12 @@ Test('test no date cache', (t) => {
 
     const subscription = logger.observe().subscribe(
         ({ source, name, timestamp, tags, data }) => {
-            console.log(`${timestamp.ts}(${timestamp.ticks}) ${source}/${name}: ${data}`);
+            console.log(`${timestamp.ts}(${timestamp.ontick}) ${source}/${name}: ${data}`);
             t.equal(source, 'rxlogstream', 'source is correct.');
             t.equal(name, 'mylogger', 'name is correct.');
             t.equal(typeof timestamp, 'object', 'timestamp is an object.');
             t.equal(typeof timestamp.ts, 'number', 'timestamp ts is a number.');
-            t.equal(timestamp.ticks, 0, 'timestamp ticks is 0.');
+            t.equal(timestamp.ontick, 1, 'timestamp ontick is 0.');
             t.ok(Array.isArray(tags), 'tags is an array.');
             t.equal(data, 'hello world', 'data is correct.');
         }
@@ -60,7 +60,7 @@ Test('test sub modules', (t) => {
 
     const subscription = m1.logger.observe().subscribe(
         ({ source, name, timestamp, tags, data }) => {
-            console.log(`${timestamp.ts}(${timestamp.ticks}) ${source}/${name}: ${data}`);
+            console.log(`${timestamp.ts}(${timestamp.ontick}) ${source}/${name}: ${data}`);
             t.equal(source, 'm1', 'source is correct.');
             t.equal(name, 'm1Logger', 'name is correct.');
             t.ok(data, 'received data.');
@@ -82,7 +82,7 @@ Test('test global events', (t) => {
 
     const subscription = Logger.observe().subscribe(
         ({ source, name, timestamp, tags, data }) => {
-            console.log(`${timestamp.ts}(${timestamp.ticks}) ${source}/${name}: ${data}`);
+            console.log(`${timestamp.ts}(${timestamp.ontick}) ${source}/${name}: ${data}`);
             t.pass('event received.');
         }
     );
